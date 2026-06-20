@@ -1,0 +1,214 @@
+# Nome exibido para a workflow no GitHub
+name: Pipeline Completa
+
+# Permissões necessárias para a workflow
+permissions:
+  # Permite escrever no repositório (para commits e pushes)
+  contents: write
+
+# Eventos que disparam a workflow
+on:
+  # Dispara ao fazer push na branch main
+  push:
+    # Branches que ativam a workflow
+    branches:
+      - main
+
+  # Execução agendada
+  schedule:
+    # Agenda para rodar todos os dias às 4:44 UTC
+    - cron: '44 4 * * *'
+
+  # Permite disparo manual pelo GitHub UI
+  workflow_dispatch:
+
+# Configuração de concorrência para evitar execuções paralelas
+concurrency:
+  # Agrupa execuções por branch
+  group: ci-${{ github.ref }}
+  # Cancela execuções anteriores do mesmo branch
+  cancel-in-progress: true
+
+# Lista de jobs da workflow
+jobs:
+
+  # Job principal para testes
+  test:
+    # Nome descritivo exibido na interface
+    name: Testes Node.js
+    # Sistema operacional do runner (ambiente de execução)
+    runs-on: ubuntu-latest
+    # Tempo máximo para o job completar (em minutos)
+    timeout-minutes: 15
+
+    # Configuração de matriz para testar múltiplas versões
+    strategy:
+      # Define variáveis que criam múltiplas execuções do job
+      matrix:
+        # Versões do Node.js a testar
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      # Primeira etapa: faz checkout do código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Instala e configura a versão do Node especificada na matriz
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+
+        # Parâmetros de entrada para a action
+        with:
+
+          # Utiliza a versão definida na matriz
+          node-version: ${{ matrix.node-version }}
+
+          # Habilita cache das dependências npm para acelerar builds
+          cache: npm
+
+      # Instala as dependências exatamente como estão no package-lock.json
+      - name: Instalar dependências
+
+        # Comando para instalar dependências do npm
+        run: npm ci
+
+      # Executa análise estática de código (se configurado)
+      - name: Executar lint
+
+        # Verifica se existe script lint; executa se existir, caso contrário mostra mensagem
+        run: |
+          # Busca pela palavra "lint" nos scripts do package.json
+          if npm run | grep -q "lint"; then
+            # Executa o script lint
+            npm run lint
+          else
+            # Mensagem se lint não estiver configurado
+            echo "Lint não configurado."
+          fi
+
+      # Executa os testes automatizados
+      - name: Executar testes
+
+        # Comando para executar suite de testes
+        run: npm test
+
+      # Upload do relatório Mochawesome
+      - name: Upload do relatório Mochawesome
+        if: hashFiles('reports/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochawesome-report
+          path: reports/
+
+      # Executa a cobertura de testes (se configurado)
+      - name: Executar cobertura de testes
+
+        # Verifica se existe script coverage; executa se existir, caso contrário mostra mensagem
+        run: |
+          # Busca pela palavra "coverage" nos scripts do package.json
+          if npm run | grep -q "coverage"; then
+            # Executa o script de cobertura
+            npm run coverage
+          else
+            # Mensagem se coverage não estiver configurado
+            echo "Coverage não configurado."
+          fi
+
+      # Verifica se a aplicação compila corretamente (se configurado)
+      - name: Build do projeto
+
+        # Verifica se existe script build; executa se existir, caso contrário mostra mensagem
+        run: |
+          # Busca pela palavra "build" nos scripts do package.json
+          if npm run | grep -q "build"; then
+            # Executa o script de build
+            npm run build
+          else
+            # Mensagem se build não estiver configurado
+            echo "Build não configurado."
+          fi
+
+      # Publica os arquivos gerados pela cobertura como artefato
+      - name: Upload da cobertura
+
+        # Executa apenas se a pasta coverage existir
+        if: hashFiles('coverage/**') != ''
+
+        # Action responsável pelo upload de artefatos
+        uses: actions/upload-artifact@v4
+
+        # Parâmetros de configuração do artefato
+        with:
+
+          # Nome que aparecerá para download no GitHub
+          name: coverage-report-node-${{ matrix.node-version }}
+
+          # Pasta que contém o relatório de cobertura
+          path: coverage/
+
+  # Job responsável por gerar estatísticas de linguagens
+  language-stats:
+
+    # Nome descritivo exibido na interface
+    name: Estatísticas de Linguagens
+
+    # Executa somente após o término do job de testes
+    needs: test
+
+    # Sistema operacional do runner
+    runs-on: ubuntu-latest
+
+    # Lista de etapas do job
+    steps:
+
+      # Primeira etapa: faz checkout do código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Executa a Action responsável por analisar as linguagens
+      - name: Gerar estatísticas de linguagens
+
+        # Versão e autor da action
+        uses: StefVuck/Github-Language-Stats@v1.2.0
+
+        # Parâmetros de entrada
+        with:
+
+          # Token pessoal utilizado para acessar a API do GitHub
+          github_token: ${{ secrets.STATS_TOKEN }}
+
+          # Tipo de visualização gerada (leaderboard exibe em formato de ranking)
+          visualization_types: "leaderboard"
+
+          # Diretório onde os relatórios serão salvos
+          output_path: "stats"
+
+      # Aguarda a finalização da geração dos arquivos
+      - name: Aguardar geração dos arquivos
+
+        # Espera 10 segundos para garantir que os arquivos foram gerados
+        run: sleep 10
+
+      # Salva os relatórios gerados no repositório
+      - name: Commit dos relatórios
+      
+        # Script com múltiplos comandos git para commit e push
+        run: |
+
+          # Configura o usuário que realizará o commit (bot do GitHub Actions)
+          git config --global user.name "github-actions[bot]"
+
+          # Configura o e-mail do usuário que realizará o commit
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Ajusta permissões de leitura/escrita nos arquivos gerados
+          chmod -R u+rw stats
+
+          # Adiciona os arquivos modificados da pasta stats para staging
+          git add stats/
+
+          # Verifica se há alterações no staging; se sim, realiza commit
+          git diff --staged --quiet || git commit -m "Atualiza estatísticas de linguagens"
+
+          # Faz push das alterações para o repositório remoto (main branch)
+          git push
