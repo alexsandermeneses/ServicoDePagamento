@@ -1,0 +1,313 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 9,
+    "passes": 9,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-06-20T12:19:03.550Z",
+    "end": "2026-06-20T12:19:03.561Z",
+    "duration": 11,
+    "testsRegistered": 9,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8229dd19-3a0b-4b9f-825c-666af5fe99a3",
+      "title": "",
+      "fullFile": "C:\\Users\\asander.s\\Downloads\\atividade_aula_6\\ServicoDePagamento\\test\\servicoDePagamento.test.js",
+      "file": "\\test\\servicoDePagamento.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "03541d60-1686-4eea-8942-4544ccd0e6cf",
+          "title": "Testes da classe Pagamento",
+          "fullFile": "C:\\Users\\asander.s\\Downloads\\atividade_aula_6\\ServicoDePagamento\\test\\servicoDePagamento.test.js",
+          "file": "\\test\\servicoDePagamento.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before each\" hook in \"Testes da classe Pagamento\"",
+              "fullTitle": "Testes da classe Pagamento \"before each\" hook in \"Testes da classe Pagamento\"",
+              "timedOut": false,
+              "duration": 0,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "pagamentoService = new ServicoDePagamento();",
+              "err": {},
+              "uuid": "622f5326-37b6-46d4-b628-1c7a840ba300",
+              "parentUUID": "03541d60-1686-4eea-8942-4544ccd0e6cf",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "95815e14-cff1-4f11-ba85-80edd99c9794",
+              "title": "Testes do método realizarPagamento()",
+              "fullFile": "C:\\Users\\asander.s\\Downloads\\atividade_aula_6\\ServicoDePagamento\\test\\servicoDePagamento.test.js",
+              "file": "\\test\\servicoDePagamento.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Deve validar que se o usuário não inserir o codigo de barras, irá lançar uma exceção",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que se o usuário não inserir o codigo de barras, irá lançar uma exceção",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "assert.throws(() => {\n    pagamentoService.realizarPagamento('', 'ISAE', 1000)\n}, {\n    message: 'Código de barras obrigatório'\n});",
+                  "err": {},
+                  "uuid": "f5b2b6b5-a733-4b76-ab82-1302f2708db9",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar que se o usuário não inserir a empresa, irá lançar uma exceção",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que se o usuário não inserir a empresa, irá lançar uma exceção",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "assert.throws(() => {\n    pagamentoService.realizarPagamento('123', '', 1000)\n}, {\n    message: 'Empresa obrigatória'\n});",
+                  "err": {},
+                  "uuid": "d92cd770-9f06-4cc1-8f1f-267f642b2768",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar que se o usuário não inserir o valor, irá lançar uma exceção",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que se o usuário não inserir o valor, irá lançar uma exceção",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "assert.throws(() => {\n    pagamentoService.realizarPagamento('123', 'BBSE', )\n}, {\n    message: 'Valor obrigatório e tem que ser maior que 0'\n});",
+                  "err": {},
+                  "uuid": "d1597955-aa64-4c23-a96d-7ace361c6134",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar que se o usuário inserir valor <= 0, irá lançar uma exceção",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que se o usuário inserir valor <= 0, irá lançar uma exceção",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "assert.throws(() => {\n    pagamentoService.realizarPagamento('345', 'ISAE', 0)\n}, {\n    message: 'Valor obrigatório e tem que ser maior que 0'\n});",
+                  "err": {},
+                  "uuid": "c7b9a424-5e0f-4aac-8953-32bbaac00bcc",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar que está a criar um objeto",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que está a criar um objeto",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//Act\n        const pagamento = pagamentoService.realizarPagamento('12345-9876-567','Banco do Brasil', 100);\n        //Assert\n        assert.deepStrictEqual(pagamento, {\n            codigoBarras: '12345-9876-567',\n            empresa: 'Banco do Brasil',\n            valor: 100,\n            categoria: 'PADRAO'\n        });",
+                  "err": {},
+                  "uuid": "87c5c966-ebeb-4f5b-babc-fae3feeee9bb",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar que valor > 100 recebe categoria \"CARA\"",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que valor > 100 recebe categoria \"CARA\"",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//Act\nconst pagamento = pagamentoService.realizarPagamento('12345-9876-567', 'Banco do Brasil', 101);\n//Assert\nassert.equal(pagamento.categoria,'CARA');",
+                  "err": {},
+                  "uuid": "3c646582-31fb-4893-b6d6-0b6aeb7a2943",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar que valor <= 100 recebe categoria \"PADRAO\"",
+                  "fullTitle": "Testes da classe Pagamento Testes do método realizarPagamento() Deve validar que valor <= 100 recebe categoria \"PADRAO\"",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//Act\nconst pagamento = pagamentoService.realizarPagamento('12345-9876-567', 'Banco do Brasil', 100);\n//Assert\nassert.equal(pagamento.categoria,'PADRAO');",
+                  "err": {},
+                  "uuid": "63fc1506-5cc4-40c9-b193-be0c4a6e0ec0",
+                  "parentUUID": "95815e14-cff1-4f11-ba85-80edd99c9794",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "f5b2b6b5-a733-4b76-ab82-1302f2708db9",
+                "d92cd770-9f06-4cc1-8f1f-267f642b2768",
+                "d1597955-aa64-4c23-a96d-7ace361c6134",
+                "c7b9a424-5e0f-4aac-8953-32bbaac00bcc",
+                "87c5c966-ebeb-4f5b-babc-fae3feeee9bb",
+                "3c646582-31fb-4893-b6d6-0b6aeb7a2943",
+                "63fc1506-5cc4-40c9-b193-be0c4a6e0ec0"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 2,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "ac1b3c4e-c95c-4af3-a947-413679664f2d",
+              "title": "Teste do método consultarUltimoPagamento()",
+              "fullFile": "C:\\Users\\asander.s\\Downloads\\atividade_aula_6\\ServicoDePagamento\\test\\servicoDePagamento.test.js",
+              "file": "\\test\\servicoDePagamento.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Deve validar o erro quando não existir pagamento",
+                  "fullTitle": "Testes da classe Pagamento Teste do método consultarUltimoPagamento() Deve validar o erro quando não existir pagamento",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "assert.throws(() => {\n    pagamentoService.consultarUltimoPagamento()\n}, {\n    message: 'Nenhum pagamento encontrado'\n});",
+                  "err": {},
+                  "uuid": "2d585f65-880f-4ecd-825c-359d7bcb0ce3",
+                  "parentUUID": "ac1b3c4e-c95c-4af3-a947-413679664f2d",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Deve validar o último objeto criado da lista",
+                  "fullTitle": "Testes da classe Pagamento Teste do método consultarUltimoPagamento() Deve validar o último objeto criado da lista",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//Act\npagamentoService.realizarPagamento('12345-9876-567', 'Banco do Brasil', 100);\npagamentoService.realizarPagamento('12345-9876-5124', 'Santader', 101);\npagamentoService.realizarPagamento('12345-9123-1237', 'Taesa', 100);\n\nconst ultimoPagamento = pagamentoService.consultarUltimoPagamento();\n//Assert\nassert.deepStrictEqual(ultimoPagamento, {\n    codigoBarras: '12345-9123-1237',\n    empresa: 'Taesa',\n    valor: 100,\n    categoria: 'PADRAO'\n});",
+                  "err": {},
+                  "uuid": "ecc2bcc2-6ba0-4246-8eb4-0c19f06fb7f2",
+                  "parentUUID": "ac1b3c4e-c95c-4af3-a947-413679664f2d",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "2d585f65-880f-4ecd-825c-359d7bcb0ce3",
+                "ecc2bcc2-6ba0-4246-8eb4-0c19f06fb7f2"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 0,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.7.6"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "index",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports",
+        "reportFilename": "index"
+      },
+      "version": "6.3.2"
+    }
+  }
+}
